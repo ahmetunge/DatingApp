@@ -37,8 +37,9 @@ namespace DatingApp.Api
         {
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-            .AddJsonOptions(opt => {
-                opt.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            .AddJsonOptions(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
             });
             services.AddCors();
@@ -46,8 +47,9 @@ namespace DatingApp.Api
             services.AddAutoMapper();
             services.AddTransient<Seed>();
             services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IDatingRepository,DatingRepository>();
-            
+            services.AddScoped<IDatingRepository, DatingRepository>();
+            services.AddScoped<LogUserActivity>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
@@ -61,6 +63,8 @@ namespace DatingApp.Api
 
                 };
             });
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
